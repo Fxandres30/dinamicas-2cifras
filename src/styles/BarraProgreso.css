@@ -1,0 +1,99 @@
+.barra-progreso-container {
+  background: #ffffff;
+  padding: 20px;
+  width: 80%;
+  max-width: 700px;      /* 👈 evita que crezca demasiado */
+  border-radius: 16px;
+  margin: 20px auto;     /* 👈 esto lo centra */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+}
+
+/* ===== BARRA BASE ===== */
+.barra {
+  display: flex;
+  height: 18px;
+  width: 100%;
+  background: #f1f5f9;
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+/* ===== SECCIONES ===== */
+.seccion {
+  height: 100%;
+  transition: width 0.5s ease;
+}
+
+/* COLORES PERSONALIZADOS */
+.pagados {
+  background: #22c55e;   /* verde */
+}
+
+.reservados {
+  background: #fdd11e;   /* amarillo fuerte */
+}
+
+.libres {
+  background: #e0e2e4;   /* gris hielo */
+}
+
+/* ===== LEYENDA MÁS PEQUEÑA ===== */
+.leyenda {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  gap: 5px;
+}
+
+/* ===== LEYENDA ULTRA COMPACTA ===== */
+.leyenda {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  gap: 6px;
+}
+
+/* TARJETAS PEQUEÑAS */
+.color {
+  flex: 1;
+  background: #f8fafc;
+  padding: 6px 8px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 600;
+  border: 1px solid #e2e8f0;
+  line-height: 1.1;
+}
+
+/* TEXTO SUPER PEQUEÑO */
+.color span:first-child {
+  font-size: 9px;
+  opacity: 0.6;
+  margin-bottom: 2px;
+}
+
+/* NÚMERO MÁS COMPACTO */
+.color strong {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* COLORES */
+.color.pagados {
+  border-left: 2px solid #22c55e;
+  color: #166534;
+}
+
+.color.reservados {
+  border-left: 2px solid #fdd11e;
+  color: #92400e;
+}
+
+.color.libres {
+  border-left: 2px solid #cbd5e1;
+  color: #475569;
+}
