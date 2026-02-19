@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import "../styles/BarraProgreso.css";
 import "../styles/header.css";
 import "../styles/GridNumeros.css";
+import "../styles/estados.css";
 import "../styles/FormularioReserva.css";
 import useReservas from "../hooks/useReservas";
 import GridNumeros from "../components/GridNumeros";

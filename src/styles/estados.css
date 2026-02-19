@@ -1,0 +1,38 @@
+/* CONTENEDOR DE LEYENDA */
+.leyenda-estados {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-top: -5px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #334155;
+}
+
+/* ITEM INDIVIDUAL */
+.item-estado {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* CÍRCULOS */
+.circulo {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid #d1d5db;
+}
+
+/* COLORES */
+.circulo.reservado {
+  background: #fdd11e;  /* amarillo */
+}
+
+.circulo.pagado {
+  background: #22c55e;  /* verde */
+}
+
+.circulo.libre {
+  background: #ffffff;  /* blanco */
+}
