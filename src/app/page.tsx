@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaWhatsapp } from "react-icons/fa";
 import { Toaster } from "react-hot-toast";
+import html2canvas from "html2canvas";
 
 import "../styles/BarraProgreso.css";
 import "../styles/header.css";
@@ -35,44 +36,55 @@ export default function Home() {
      FUNCIÓN COMPARTIR PRO
   ======================== */
 const compartirTabla = async () => {
-  const contenedor = document.querySelector(".numeros-card");
+  const contenedor = document.querySelector(".numeros-card") as HTMLElement;
   if (!contenedor) return;
 
-  contenedor.classList.add("modo-captura");
+  try {
+    // Activar modo captura
+    contenedor.classList.add("modo-captura");
 
-  const html2canvas = require("html2canvas");
+    // Esperar que el DOM aplique estilos
+    await new Promise(resolve => setTimeout(resolve, 80));
 
-  const rect = contenedor.getBoundingClientRect();
+    const rect = contenedor.getBoundingClientRect();
 
-  const canvas = await html2canvas(contenedor, {
-    scale: 2,
-    backgroundColor: "#ffffff",
-    width: rect.width,
-    height: rect.height,
-    windowWidth: document.documentElement.scrollWidth,
-    windowHeight: document.documentElement.scrollHeight,
-    scrollX: 0,
-    scrollY: 0,
-  });
-
-  contenedor.classList.remove("modo-captura");
-
-  const blob = await new Promise<Blob | null>((resolve) =>
-    canvas.toBlob(resolve, "image/png")
-  );
-
-  if (!blob) return;
-
-  const file = new File([blob], "numeros.png", {
-    type: "image/png",
-  });
-
-  if (navigator.share && navigator.canShare?.({ files: [file] })) {
-    await navigator.share({
-      title: "Estado actual",
-      text: "📊 Estado actual 👇",
-      files: [file],
+    const canvas = await html2canvas(contenedor, {
+      scale: window.devicePixelRatio * 2, // 🔥 MÁS CALIDAD REAL
+      backgroundColor: "#ffffff",
+      useCORS: true,
+      width: rect.width,
+      height: rect.height,
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth: document.documentElement.scrollWidth,
+      windowHeight: document.documentElement.scrollHeight,
     });
+
+    // Quitar modo captura
+    contenedor.classList.remove("modo-captura");
+
+    const blob = await new Promise<Blob | null>((resolve) =>
+      canvas.toBlob(resolve, "image/png", 1.0)
+    );
+
+    if (!blob) return;
+
+    const file = new File([blob], "estado-numeros.png", {
+      type: "image/png",
+    });
+
+    if (navigator.share && navigator.canShare?.({ files: [file] })) {
+      await navigator.share({
+        title: "Estado actual",
+        text: "📊 Mira el estado actual 👇",
+        files: [file],
+      });
+    } else {
+      alert("Tu dispositivo no permite compartir imagen directamente.");
+    }
+
+  } catch (error) {
+    console.error("Error al compartir:", error);
   }
 };
   return (

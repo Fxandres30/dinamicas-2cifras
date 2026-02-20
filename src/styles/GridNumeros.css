@@ -137,5 +137,5 @@
   }
 }
 
-.modo-captura .leyenda-estados span { transform: translateY(10px); }
-.modo-captura .numeroTexto { transform: translateY(-9px); }
+.modo-captura .leyenda-estados span { transform: translateY(8px); }
+.modo-captura .numeroTexto { transform: translateY(-8px); }
