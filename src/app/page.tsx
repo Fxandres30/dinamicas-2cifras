@@ -49,7 +49,7 @@ const compartirTabla = async () => {
     const rect = contenedor.getBoundingClientRect();
 
     const canvas = await html2canvas(contenedor, {
-      scale: window.devicePixelRatio * 2, // 🔥 MÁS CALIDAD REAL
+      scale: window.devicePixelRatio * 3, // 🔥 MÁS CALIDAD REAL
       backgroundColor: "#ffffff",
       useCORS: true,
       width: rect.width,

@@ -101,8 +101,8 @@
 
 /* CÍRCULOS */
 .dot {
-  width: 14px;
-  height: 14px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   border: 1px solid #cbd5e1;
 }
@@ -138,4 +138,4 @@
 }
 
 .modo-captura .leyenda-estados span { transform: translateY(8px); }
-.modo-captura .numeroTexto { transform: translateY(-8px); }
+.modo-captura .numeroTexto { transform: translateY(-7px); }
