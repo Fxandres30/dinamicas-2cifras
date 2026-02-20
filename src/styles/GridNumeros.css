@@ -1,123 +1,130 @@
-/* ===============================
-   CONTENEDOR GENERAL
-================================= */
+/* ========================================
+   CONTENEDOR PRINCIPAL DE CAPTURA
+======================================== */
 .numeros-container {
-  padding: 25px;
+  width: 100%;
   display: flex;
+  padding: 25px;
   justify-content: center;
-  overflow: visible;
+  background: #1c67b3c4; /* fondo visible en captura */
 }
 
-/* ===============================
-   TARJETA COMPARTIBLE
-================================= */
+/* ========================================
+   TARJETA INTERNA
+======================================== */
 .numeros-card {
   width: 100%;
-  max-width: 900px;
-  background: white;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  max-width: 850px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
-/* ===============================
+/* ========================================
    GRID 10x10
-================================= */
-
-/* ===============================
-   GRID
-================================= */
+======================================== */
 .gridNumeros {
   display: grid;
   grid-template-columns: repeat(10, minmax(0, 1fr));
   gap: 6px;
 }
 
-/* ===============================
-   CUADRO
-================================= */
+/* ========================================
+   CUADRO NUMERO
+======================================== */
 .botonNumero {
-  aspect-ratio: 1 / 1;
   width: 100%;
+  aspect-ratio: 1 / 1;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border-radius: 4px;
-  border: 1px solid #ccc;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
 
-  padding: 0;
-  cursor: pointer;
-
-  position: relative;
-}
-
-/* ===============================
-   NUMERO INTERNO CONTROLADO
-================================= */
-.numeroTexto {
-  display: flex;
   font-size: 14px;
   font-weight: 600;
   line-height: 1;
-}
 
+  cursor: pointer;
+  transition: 0.2s ease;
+}
 
 .botonNumero:hover {
   transform: scale(1.05);
 }
 
-/* ===============================
-   ESTADOS GRID
-================================= */
+/* ========================================
+   ESTADOS
+======================================== */
 .botonNumero.libre {
-  background: #e2e8f0;
+  background: #ffffff;
   color: #0f172a;
-  border: 1px solid #cfcfcf;
 }
 
 .botonNumero.reservado {
-  background: #facc15;
-  color: #facc15;
+  background: #fdd11e;
+  color: #78350f;
 }
 
 .botonNumero.pagado {
   background: #22c55e;
-  color: #22c55e;
+  color: #ffffff;
 }
 
-/* ===============================
+.botonNumero.temporal {
+  background: #fecaca;
+  color: #7f1d1d;
+}
+
+/* ========================================
    LEYENDA
-================================= */
+======================================== */
 .leyenda-estados {
   display: flex;
   justify-content: center;
-  gap: 20px;
-  font-size: 14px;
-  margin-bottom: 5px;
+  gap: 30px;
+  margin-top: 18px;
+  font-size: 13px;
   font-weight: 500;
+  color: #334155;
 }
 
+.leyenda-estados span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* CÍRCULOS */
 .dot {
-  width: 13px;
-  height: 13px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  display: inline-block;
-  margin-right: 4px;
+  border: 1px solid #cbd5e1;
 }
 
-.dot.libre { background: #e2e8f0; }
-.dot.reservado { background: #facc15; }
-.dot.pagado { background: #22c55e; }
+.dot.libre {
+  background: #ffffff;
+}
 
-/* ===============================
+.dot.reservado {
+  background: #fdd11e;
+}
+
+.dot.pagado {
+  background: #22c55e;
+}
+
+/* ========================================
    RESPONSIVE
-================================= */
+======================================== */
 @media (max-width: 600px) {
 
   .numeros-card {
-    padding: 10px;
+    padding: 14px;
   }
 
   .gridNumeros {
@@ -127,12 +134,4 @@
   .botonNumero {
     font-size: 12px;
   }
-}
-
-.modo-captura .leyenda-estados span {
-  transform: translateY(10px);
-}
-
-.modo-captura .numeroTexto span {
-  transform: translateY(100px);
 }

@@ -35,7 +35,7 @@ export default function Home() {
      FUNCIÓN COMPARTIR PRO
   ======================== */
 const compartirTabla = async () => {
-  const contenedor = document.querySelector(".numeros-container");
+  const contenedor = document.querySelector(".numeros-card");
   if (!contenedor) return;
 
   contenedor.classList.add("modo-captura");
