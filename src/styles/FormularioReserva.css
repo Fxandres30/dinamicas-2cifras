@@ -3,9 +3,10 @@
 ================================= */
 .formulario-contenedor {
   background: #ffffff;
-  padding: 24px;
+  padding: 15px;
   border-radius: 12px;
-  margin: 25px 0;
+  margin-left: 20px;
+  margin-right: 20px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
   border: 1px solid #e2e8f0;
 }
@@ -16,7 +17,7 @@
 .campo-formulario {
   display: flex;
   flex-direction: column;
-  margin-bottom: 18px;
+  margin-bottom: 5px;
 }
 
 /* ===============================
@@ -25,7 +26,7 @@
 .etiqueta-campo {
   font-size: 14px;
   font-weight: 600;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   color: #334155;
 }
 
@@ -33,7 +34,7 @@
    INPUT
 ================================= */
 .input-campo {
-  padding: 10px 12px;
+  padding: 5px 10px;
   border-radius: 8px;
   border: 1px solid #cbd5e1;
   font-size: 14px;
@@ -65,7 +66,7 @@
 .boton-contenedor {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 5px;
   margin-top: 20px;
   justify-content: center;
 }
@@ -76,7 +77,7 @@
 .boton-reservar {
   background: #1e293b;
   color: #ffffff;
-  padding: 10px 18px;
+  padding: 5px 80px;
   border-radius: 8px;
   border: none;
   font-weight: 600;
@@ -99,7 +100,7 @@
    BOTONES ESTADO
 ================================= */
 .boton-estado {
-  padding: 10px 16px;
+  padding: 8px 10px;
   border-radius: 8px;
   border: none;
   font-weight: 600;
