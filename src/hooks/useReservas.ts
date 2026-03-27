@@ -105,49 +105,51 @@ export default function useReservas() {
   }, [fetchNumeros]);
 
   const toggleSeleccion = async (numero: string) => {
-    if (updatingSet.has(numero)) return;
+  if (updatingSet.has(numero)) return;
 
-    setUpdatingSet((prev) => new Set(prev.add(numero)));
+  setUpdatingSet((prev) => new Set(prev).add(numero));
 
-    const esSeleccionado = seleccionados.includes(numero);
+  const esSeleccionado = seleccionados.includes(numero);
 
-    setSeleccionados((prev) =>
-      esSeleccionado ? prev.filter((n) => n !== numero) : [...prev, numero]
-    );
+  // Actualiza visual primero
+  setSeleccionados((prev) =>
+    esSeleccionado ? prev.filter((n) => n !== numero) : [...prev, numero]
+  );
 
-    try {
-      const { data: checkData, error } = await supabase
-        .from("reservas_dos_cifras")
-        .select("estado, temporal_por")
-        .eq("numero", numero)
-        .single();
+  try {
+    const { data: checkData, error } = await supabase
+  .from("reservas_dos_cifras")
+  .select("estado, temporal_por, comprador, contacto")
+  .eq("numero", numero)
+  .single();
+    if (error || !checkData) {
+      toast.error("Error al verificar el número.");
+      await fetchNumeros();
+      return;
+    }
 
-      if (error || !checkData) {
-        toast.error("Error al verificar el número.");
-        await fetchNumeros();
-        return;
-      }
+    // 🔒 SOLO bloquea si es temporal de otro usuario
+    if (
+      !esSeleccionado &&
+      checkData.estado === "temporal" &&
+      checkData.temporal_por !== userId
+    ) {
+      toast.error(`El número ${numero} está siendo usado por otro usuario.`);
+      setSeleccionados((prev) => prev.filter((n) => n !== numero));
+      await fetchNumeros();
+      return;
+    }
 
-      if (!esSeleccionado) {
-  if (checkData.estado === "reservado" || checkData.estado === "pagado") {
-    toast.error(`El número ${numero} ya está reservado.`);
-    setSeleccionados((prev) => prev.filter((n) => n !== numero));
-    await fetchNumeros();
-    return;
-  }
-
-  if (checkData.temporal_por && checkData.temporal_por !== userId) {
-    toast.error(`El número ${numero} ya está siendo seleccionado por otro usuario.`);
-    setSeleccionados((prev) => prev.filter((n) => n !== numero));
-    await fetchNumeros();
-    return;
-  }
+    // 🔥 Si está reservado o pagado → cargar datos al formulario
+if (!esSeleccionado && (checkData.estado === "reservado" || checkData.estado === "pagado")) {
+  setNombre(checkData.comprador || "");
+  setContacto(checkData.contacto || "");
 }
-
-
+    // 🔥 SOLO si está libre manejamos temporal
+    if (checkData.estado === "libre") {
       const expiracion = new Date(Date.now() + 5 * 60_000).toISOString();
 
-      const { data } = await supabase
+      const { data: updateData } = await supabase
         .from("reservas_dos_cifras")
         .update({
           estado: esSeleccionado ? "libre" : "temporal",
@@ -157,25 +159,28 @@ export default function useReservas() {
         .eq("numero", numero)
         .select();
 
-      if (!data || data.length === 0) {
-        toast.error("No se pudo actualizar, otro usuario lo tomó.");
+      if (!updateData || updateData.length === 0) {
+        toast.error("Otro usuario tomó este número.");
         await fetchNumeros();
         return;
       }
-    } catch {
-      toast.error("Error al reservar el número.");
-      setSeleccionados((prev) =>
-        esSeleccionado ? [...prev, numero] : prev.filter((n) => n !== numero)
-      );
-      await fetchNumeros();
-    } finally {
-      setUpdatingSet((prev) => {
-        const copy = new Set(prev);
-        copy.delete(numero);
-        return copy;
-      });
     }
-  };
+
+    // 🔥 Si está reservado o pagado:
+    // Solo lo dejamos seleccionarse visualmente
+    // NO tocamos base de datos
+
+  } catch {
+    toast.error("Error al seleccionar el número.");
+    await fetchNumeros();
+  } finally {
+    setUpdatingSet((prev) => {
+      const copy = new Set(prev);
+      copy.delete(numero);
+      return copy;
+    });
+  }
+};
 
 const confirmarReserva = async () => {
   if (seleccionados.length === 0 || !nombre.trim() || !contacto.trim()) {
